@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { setAlert } from "../../actions/alert";
-const Login = () => {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../actions/auth";
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -16,29 +19,13 @@ const Login = () => {
   const onSubmit = async e => {
     e.preventDefault();
 
-    console.log(formData);
-    const newUser = {
-      email,
-      password
-    };
-
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      };
-
-      const body = JSON.stringify(newUser);
-
-      const res = await axios.post("/api/auth", body, config);
-      console.log(res.data);
-      setAlert("Login success", "success");
-    } catch (error) {
-      console.error(error.response.data);
-      setAlert("Login errors", "danger");
-    }
+    login({ email, password });
   };
+
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/"></Redirect>;
+  }
 
   return (
     <section className="container">
@@ -69,7 +56,7 @@ const Login = () => {
             type="password"
             placeholder="Password"
             required
-            minLength="6"
+            minLength="5"
           />
         </div>
 
@@ -82,4 +69,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

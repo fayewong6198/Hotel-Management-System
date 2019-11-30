@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const Landing = () => {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+const Landing = isAuthenticated => {
   return (
     <section className="landing">
       <div className="dark-overlay">
@@ -62,9 +65,13 @@ const Landing = () => {
               </select>
             </div>
             <input type="submit" value="Find" className="btn btn-primary" />
-            <p className="my-1">
-              Don't have a account? <Link to="/register">Register</Link>
-            </p>
+            {!isAuthenticated ? (
+              <p className="my-1">
+                Don't have a account? <Link to="/register">Register</Link>
+              </p>
+            ) : (
+              ""
+            )}
           </form>
         </div>
       </div>
@@ -72,4 +79,11 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+Landing.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps, null)(Landing);
