@@ -1,33 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { searchRooms } from "../../actions/room";
 
-const Landing = isAuthenticated => {
+const Landing = ({ isAuthenticated, searchRooms }) => {
+  const today = new Date();
+  const [formData, setFormData] = useState({
+    type: "hall",
+    checkInDate: "2019-2-3",
+    checkOutDate: "2019-2-3",
+    numberOfAdults: 2,
+    numberOfChildren: "6",
+    numberOfRooms: 3
+  });
+
+  const {
+    type,
+    check_in_date,
+    check_out_date,
+    numberOfAdults,
+    numberOfChildren,
+    numberOfRooms
+  } = formData;
+
+  const onChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // const onSubmit = async e => {
+  //   e.preventDefault();
+
+  //   searchRooms(formData);
+  // };
   return (
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
           <h1 className="x-large">Booking</h1>
-          <form action="search.html" className="form form-reversion">
+          <form action="/search" className="form form-reversion">
             <div className="type">
               <label for="type">Type of Room</label>
-              <select name="type" id="">
+              <select
+                name="type"
+                id=""
+                onChange={e => onChange(e)}
+                value={type}
+              >
                 <option value="room">Room</option>
                 <option value="hall">Hall</option>
               </select>
             </div>
             <div className="check-in-date">
-              <label for="checkin-date">Check in Date</label>
-              <input type="date" name="checkin-date" id="" />
+              <label for="checkInDate">Check in Date</label>
+              <input
+                type="date"
+                name="checkInDate"
+                id=""
+                onChange={e => onChange(e)}
+              />
             </div>
             <div className="check-out-date">
-              <label for="checkin-date">Check out Date</label>
-              <input type="date" name="checkout-date" id="" />
+              <label for="checkOutDate">Check out Date</label>
+              <input
+                type="date"
+                name="checkOutDate"
+                id=""
+                onChange={e => onChange(e)}
+              />
             </div>
             <div className="adult">
-              <label for="adult">Number of aldut</label>
-              <select name="adult" id="">
+              <label for="numberOfAdults">Number of aldut</label>
+              <select
+                name="numberOfAdults"
+                id=""
+                onChange={e => onChange(e)}
+                value={numberOfAdults}
+              >
                 <option value="1">1 adult</option>
                 <option value="2">2 adult</option>
                 <option value="3">3 adult</option>
@@ -39,8 +88,13 @@ const Landing = isAuthenticated => {
               </select>
             </div>
             <div className="children">
-              <label for="children">Number of children</label>
-              <select name="children" id="">
+              <label for="numberOfChildren">Number of children</label>
+              <select
+                name="numberOfChildren"
+                id=""
+                onChange={e => onChange(e)}
+                value={numberOfChildren}
+              >
                 <option value="1">1 children</option>
                 <option value="2">2 children</option>
                 <option value="3">3 children</option>
@@ -52,8 +106,13 @@ const Landing = isAuthenticated => {
               </select>
             </div>
             <div className="rooms">
-              <label for="rooms">Number of rooms</label>
-              <select name="rooms" id="">
+              <label for="numberOfRooms">Number of rooms</label>
+              <select
+                name="numberOfRooms"
+                id=""
+                onChange={e => onChange(e)}
+                value={numberOfRooms}
+              >
                 <option value="1">1 rooms</option>
                 <option value="2">2 rooms</option>
                 <option value="3">3 rooms</option>
@@ -80,10 +139,11 @@ const Landing = isAuthenticated => {
 };
 
 Landing.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  searchRooms: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(mapStateToProps, null)(Landing);
+export default connect(mapStateToProps, { searchRooms })(Landing);

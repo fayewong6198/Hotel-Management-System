@@ -7,7 +7,9 @@ const {
   updateRoom,
   deleteRoom
 } = require("../../controllers/room");
+const Room = require("../../models/Room");
 
+const advancedResults = require("../../middlewares/advanceResults");
 const router = express.Router();
 
 router
@@ -19,6 +21,6 @@ router
 router
   .route("/")
   .post(protected, rolesProtected("staff", "admin"), createRoom)
-  .get(getRooms);
+  .get(advancedResults(Room, ""), getRooms);
 
 module.exports = router;

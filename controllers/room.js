@@ -6,9 +6,8 @@ const ErrorResponse = require("../utils/ErrorResponse");
 // @route GET /api/room/
 // @access Public
 exports.getRooms = asyncHandler(async (req, res, next) => {
-  const rooms = await Room.find();
-
-  res.status(200).json({ success: true, data: rooms });
+  console.log(req.query);
+  res.status(200).json(res.advancedResults);
 });
 
 // @desc Get one Room

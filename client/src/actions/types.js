@@ -7,3 +7,5 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOG_OUT = "LOG_OUT";
+export const SEARCH_ROOM_SUCCESS = "SEARCH_ROOM_SUCCESS";
+export const SEARCH_ROOM_FAIL = "SEARCH_ROOM_FAIL";
