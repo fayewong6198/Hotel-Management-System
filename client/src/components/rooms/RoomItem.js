@@ -2,13 +2,14 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import image from "./room.jpg";
+import { Link } from "react-router-dom";
 
 const RoomItem = ({ room }) => {
   return (
     <Fragment>
       <div class="room-card">
         <div>
-          <img src={image} alt="" />
+          <img src={`/uploads/${room.image}`} alt="" />
         </div>
         <div class="info">
           <h2 class="text-primary">Room ID: {room.roomId} </h2>
@@ -17,9 +18,9 @@ const RoomItem = ({ room }) => {
         <div class="rating">
           <h1>9.0</h1>
           <small>123 people give rating</small>
-          <a href="room-info.html" class="btn btn-primary">
+          <Link to={"room/" + room._id} class="btn btn-primary">
             More details
-          </a>
+          </Link>
           <a class="btn btn-success">Reversion</a>
         </div>
       </div>

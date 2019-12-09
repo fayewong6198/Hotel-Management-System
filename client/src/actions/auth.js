@@ -11,18 +11,19 @@ import {
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 //
-export const loadUser = () => async dispatch => {
+export const loadUser = (component = "app") => async dispatch => {
   if (localStorage.getItem("token")) {
     setAuthToken(localStorage.getItem("token"));
   }
   try {
-    const res = await axios.get("api/auth");
-    console.log(res.data);
+    const res = await axios.get("/api/auth");
+
     dispatch({
       type: USER_LOADED,
       payload: res.data
     });
   } catch (error) {
+    console.log("LOAD USER ", localStorage.getItem("token"));
     dispatch({
       type: AUTH_ERROR
     });
@@ -83,7 +84,7 @@ export const login = ({ email, password }) => async dispatch => {
 
   try {
     res = await axios.post("api/auth/login", body, config);
-    console.log("DIT ME MAY");
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data

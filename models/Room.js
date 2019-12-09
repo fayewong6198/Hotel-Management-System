@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ["room", "hall"],
+    default: "room"
+  },
+
   roomId: {
     type: String,
     required: [true, "Room ID is required"],
@@ -19,6 +25,10 @@ const RoomSchema = new mongoose.Schema({
     type: Date
   },
 
+  price: {
+    type: Number,
+    default: 10.0
+  },
   status: {
     type: String,
     enum: ["available", "booked"],
@@ -48,6 +58,11 @@ const RoomSchema = new mongoose.Schema({
 
   description: {
     type: String
+  },
+
+  image: {
+    type: String,
+    default: ""
   }
 });
 

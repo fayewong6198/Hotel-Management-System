@@ -1,15 +1,21 @@
 const express = require("express");
 const connectDb = require("./config/db");
 const errorHandler = require("./middlewares/errorHandler");
-
+const fileupload = require("express-fileupload");
+const path = require("path");
 const app = express();
 
 // Connect Database
-
 connectDb();
 
 // Initi Middleware
 app.use(express.json({ extended: false }));
+
+// File upload
+app.use(fileupload());
+
+// Set static folder
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => res.send("API Running"));
 
@@ -18,6 +24,7 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/rooms", require("./routes/api/room"));
 app.use("/api/users", require("./routes/api/user"));
 app.use("/api/staffs", require("./routes/api/staff"));
+app.use("/api/comments", require("./routes/api/comment"));
 
 app.use(errorHandler);
 

@@ -38,16 +38,29 @@ const UserSchema = new mongoose.Schema({
   },
 
   phoneNumber: {
-    type: [String]
+    type: String
   },
 
   cardNumber: {
-    type: [String]
+    type: String
   },
 
   createdAt: {
     type: Date,
     default: Date.now()
+  },
+
+  address: {
+    type: String
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female", "none"],
+    default: "none"
+  },
+  avatar: {
+    type: String,
+    default: ""
   }
 });
 

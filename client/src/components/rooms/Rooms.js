@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { searchRooms } from "../../actions/room";
+import { searchRooms } from "../../actions/rooms";
 import RoomItem from "./RoomItem";
 import SearchForm from "../layout/SearchForm";
 
 const Rooms = ({ match, location, rooms, searchRooms, isAuthenticated }) => {
-  const params = new URLSearchParams(location.search);
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
     searchRooms(params);
   }, []);
 
@@ -39,6 +39,6 @@ Rooms.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  rooms: state.room
+  rooms: state.rooms
 });
 export default connect(mapStateToProps, { searchRooms })(Rooms);

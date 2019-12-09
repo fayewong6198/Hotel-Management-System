@@ -1,5 +1,7 @@
 {
   "mongoURI": "mongodb://localhost:27017/hotelManagementSystem",
   "jwtSecret": "mySecretToken",
-  "jwtExpires": "1d"
+  "jwtExpires": "1d",
+  "FILE_UPLOAD_PATH": "./public/uploads",
+  "MAX_FILE_UPLOAD": 1000000
 }

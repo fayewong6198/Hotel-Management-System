@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { searchRooms } from "../../actions/room";
-import room from "../../reducers/room";
+import { searchRooms } from "../../actions/rooms";
 
 const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
   const params = new URLSearchParams(location.search);

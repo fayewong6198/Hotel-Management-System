@@ -1,24 +1,45 @@
-import { SEARCH_ROOM_SUCCESS } from "../actions/types";
+import {
+  GET_ROOM_SUCCESS,
+  GET_ROOM_FAIL,
+  UPLOAD_ROOM_IMAGE_SUCCESS,
+  UPLOAD_ROOM_IMAGE_FAIL
+} from "../actions/types";
 
 const initialState = {
   loading: true,
-  count: null,
-  pagination: null,
-  rooms: null
+  roomData: null
 };
 
-export default function(state = initialState, action) {
-  const { type, payload } = action;
+export default function(state = initialState, actions) {
+  const { type, payload } = actions;
+
   switch (type) {
-    case SEARCH_ROOM_SUCCESS:
-      console.log(payload);
+    case GET_ROOM_SUCCESS:
       return {
         ...state,
         loading: false,
-        rooms: payload.data,
-        count: payload.count
+        roomData: payload.data
+      };
+    case UPLOAD_ROOM_IMAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        roomData: {
+          ...state.roomData,
+          image: payload.data
+        }
+      };
+    case GET_ROOM_FAIL:
+      return {
+        ...state,
+        loading: true,
+        roomData: null
       };
     default:
-      return state;
+      return {
+        ...state,
+        loading: true,
+        roomData: null
+      };
   }
 }

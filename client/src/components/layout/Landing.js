@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { searchRooms } from "../../actions/room";
+import { searchRooms } from "../../actions/rooms";
 
-const Landing = ({ isAuthenticated, searchRooms }) => {
-  const today = new Date();
+const Landing = ({ location, isAuthenticated, searchRooms }) => {
+  const params = new URLSearchParams(location.search);
   const [formData, setFormData] = useState({
-    type: "hall",
-    checkInDate: "2019-2-3",
-    checkOutDate: "2019-2-3",
-    numberOfAdults: 2,
-    numberOfChildren: "6",
-    numberOfRooms: 3
+    type: params.get("type") || "room",
+    checkInDate: params.get("checkInDate") || "2019-2-3",
+    checkOutDate: params.get("checkOutDate") || "2019-2-3",
+    numberOfAdults: params.get("numberOfAdults") || 1,
+    numberOfChildren: params.get("numberOfChildren") || 1,
+    numberOfRooms: params.get("numberOfRooms") || 1
   });
 
   const {
     type,
-    check_in_date,
-    check_out_date,
+    checkInDate,
+    checkOutDate,
     numberOfAdults,
     numberOfChildren,
     numberOfRooms

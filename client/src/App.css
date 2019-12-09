@@ -281,8 +281,7 @@
   text-align: left;
 }
 .form-group {
-  margin: 0rem 0;
-  margin: 0.5rem 0;
+  margin: 0.8rem 0;
 }
 .form-text {
   display: block;
@@ -298,7 +297,7 @@
 .form textarea {
   display: block;
   width: 100%;
-  padding: 0.4rem;
+  padding: 0.5rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
 }
@@ -339,7 +338,8 @@
     "check-in-date check-in-date"
     "check-out-date check-out-date"
     "adult adult"
-    "children rooms";
+    "children rooms"
+    "submit register";
 }
 .form-reversion input[type="text"],
 .form-reversion input[type="email"],
@@ -387,6 +387,16 @@
   -ms-grid-column: 2;
   grid-area: rooms;
 }
+.form-reversion .submit {
+  -ms-grid-row: 6;
+  -ms-grid-column: 1;
+  grid-area: submit;
+}
+.form-reversion .register {
+  -ms-grid-row: 6;
+  -ms-grid-column: 2;
+  grid-area: register;
+}
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -409,6 +419,12 @@ ul {
 }
 img {
   width: 100%;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: -5px 0px -13px 0px;
 }
 .navbar {
   display: -webkit-box;

@@ -5,7 +5,8 @@ const {
   getUser,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  uploadAvatar
 } = require("../../controllers/user");
 const { protected, rolesProtected } = require("../../middlewares/auth");
 
@@ -21,5 +22,7 @@ router
   .get(protected, rolesProtected("staff", "admin"), getUser)
   .put(protected, rolesProtected("staff", "admin"), updateUser)
   .delete(protected, rolesProtected("staff", "admin"), deleteUser);
+
+router.route("/:id/avatar").put(protected, uploadAvatar);
 
 module.exports = router;

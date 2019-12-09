@@ -9,7 +9,23 @@ const Navbar = ({ auth: { user, isAuthenticated, loading }, logout }) => {
     <ul>
       <li>
         <Link to="/profile">
-          {isAuthenticated && user ? user.lastName : ""}
+          {isAuthenticated && user && user ? (
+            <img
+              class="avatar"
+              src={`http://localhost:5000/uploads/${user.avatar}`}
+            ></img>
+          ) : (
+            ""
+          )}
+        </Link>
+      </li>
+      <li>
+        <Link to="/profile">
+          {isAuthenticated && user ? (
+            <Link to="/profile">{user.lastName}</Link>
+          ) : (
+            ""
+          )}
         </Link>
       </li>
       <li>

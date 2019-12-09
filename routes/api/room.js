@@ -5,12 +5,19 @@ const {
   getRooms,
   getRoom,
   updateRoom,
-  deleteRoom
+  deleteRoom,
+  uploadRoomImage
 } = require("../../controllers/room");
 const Room = require("../../models/Room");
 
 const advancedResults = require("../../middlewares/advanceResults");
 const router = express.Router();
+
+// Include other resource router
+const commentRouter = require("./comment");
+
+// Re-route into other resources routers
+router.use("/:id/comments", commentRouter);
 
 router
   .route("/:id")
@@ -22,5 +29,9 @@ router
   .route("/")
   .post(protected, rolesProtected("staff", "admin"), createRoom)
   .get(advancedResults(Room, ""), getRooms);
+
+router
+  .route("/:id/image")
+  .put(protected, rolesProtected("staff", "admin"), uploadRoomImage);
 
 module.exports = router;
