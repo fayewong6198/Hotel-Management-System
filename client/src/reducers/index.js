@@ -5,4 +5,13 @@ import rooms from "./rooms";
 import room from "./room";
 import user from "./user";
 import users from "./users";
-export default combineReducers({ alert, auth, rooms, room, user, users });
+import comments from "./comments";
+export default combineReducers({
+  alert,
+  auth,
+  rooms,
+  room,
+  user,
+  users,
+  comments
+});

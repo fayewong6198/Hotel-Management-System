@@ -8,8 +8,8 @@ const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
   const params = new URLSearchParams(location.search);
   const [formData, setFormData] = useState({
     type: params.get("type") || "room",
-    checkInDate: params.get("checkInDate") || "2019-2-3",
-    checkOutDate: params.get("checkOutDate") || "2019-2-3",
+    checkInDate: params.get("checkInDate") || null,
+    checkOutDate: params.get("checkOutDate") || null,
     numberOfAdults: params.get("numberOfAdults") || 1,
     numberOfChildren: params.get("numberOfChildren") || 1,
     numberOfRooms: params.get("numberOfRooms") || 1
@@ -44,6 +44,8 @@ const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
           id=""
           onChange={e => onChange(e)}
           value={checkInDate}
+          required
+          min={new Date().toISOString().split("T")[0]}
         />
       </div>
       <div className="check-out-date">
@@ -54,6 +56,8 @@ const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
           id=""
           onChange={e => onChange(e)}
           value={checkOutDate}
+          min={checkInDate}
+          required
         />
       </div>
       <div className="adult">

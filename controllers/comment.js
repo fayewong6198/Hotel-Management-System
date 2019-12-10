@@ -8,14 +8,17 @@ const config = require("config");
 // @route GET /api/rooms/:id/comments
 // @access Public
 exports.getCommentsByRoomId = asyncHandler(async (req, res, next) => {
-  const comments = await Comment.find({ Room: req.params.id });
+  const comments = await Comment.find({ room: req.params.id }).populate({
+    path: "user",
+    select: "firstName lastName avatar"
+  });
 
   if (!comments) {
     console.log("Fail");
     return next(new ErrorResponse("No comments found", 404));
   }
 
-  res.status(200).json({ success: true, data: comments });
+  res.status(200).json({ success: true, data: comments.reverse() });
 });
 
 // @desc Create new comment by Room ID
@@ -39,7 +42,7 @@ exports.createNewCommentByRoomID = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Update one Room
-// @route GET /put/comments/:id
+// @route PUT /api/comments/:id
 // @access Private
 exports.updateComment = asyncHandler(async (req, res, next) => {
   let comment = await Comment.findById(req.params.commentId);
@@ -49,8 +52,9 @@ exports.updateComment = asyncHandler(async (req, res, next) => {
   }
 
   // Only admin, staff or comment user can update the comment
+
   if (
-    req.user !== comment.user &&
+    req.user._id !== comment.user._id &&
     (req.user.role !== "admin" || req.user.role !== "staff")
   ) {
     return next(new ErrorResponse("Not Authorized", 401));
@@ -62,10 +66,10 @@ exports.updateComment = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Delete one Comment
-// @route GET /put/rooms/:id
+// @route GET /delete/comments/:id
 // @access Admin
 exports.deleteComment = asyncHandler(async (req, res, next) => {
-  let comment = await Comment.findById(req.params.commentId);
+  let comment = await Comment.findById(req.params.id);
 
   if (!comment) {
     return next(new ErrorResponse("No Comment found", 404));
@@ -73,8 +77,8 @@ exports.deleteComment = asyncHandler(async (req, res, next) => {
 
   // Only admin, staff or comment user can update the comment
   if (
-    req.user !== comment.user &&
-    (req.user.role !== "admin" || req.user.role !== "staff")
+    !req.user._id.equals(comment.user._id) &&
+    (req.user.role != "admin" || req.user.role != "staff")
   ) {
     return next(new ErrorResponse("Not Authorized", 401));
   }

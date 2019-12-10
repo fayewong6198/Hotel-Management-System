@@ -6,7 +6,8 @@ const {
   getRoom,
   updateRoom,
   deleteRoom,
-  uploadRoomImage
+  uploadRoomImage,
+  makePayment
 } = require("../../controllers/room");
 const Room = require("../../models/Room");
 
@@ -33,5 +34,7 @@ router
 router
   .route("/:id/image")
   .put(protected, rolesProtected("staff", "admin"), uploadRoomImage);
+
+router.route("/:id/payment").post(protected, makePayment);
 
 module.exports = router;

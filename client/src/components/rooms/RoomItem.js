@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import image from "./room.jpg";
+
 import { Link } from "react-router-dom";
 
-const RoomItem = ({ room }) => {
+const RoomItem = ({ room, auth: { isAuthenticated } }) => {
   return (
     <Fragment>
       <div class="room-card">
@@ -21,13 +21,24 @@ const RoomItem = ({ room }) => {
           <Link to={"room/" + room._id} class="btn btn-primary">
             More details
           </Link>
-          <a class="btn btn-success">Reversion</a>
+          {!isAuthenticated ? (
+            <Link>Login to make reversion</Link>
+          ) : (
+            <Link to={`/payment/${room._id}`} class="btn btn-success">
+              Reversion
+            </Link>
+          )}
         </div>
       </div>
     </Fragment>
   );
 };
 
-RoomItem.propTypes = {};
+RoomItem.propTypes = {
+  auth: PropTypes.object.isRequired
+};
 
-export default RoomItem;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps, null)(RoomItem);

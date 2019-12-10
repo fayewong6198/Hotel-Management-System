@@ -36,10 +36,6 @@ export default function(state = initialState, actions) {
         roomData: null
       };
     default:
-      return {
-        ...state,
-        loading: true,
-        roomData: null
-      };
+      return state;
   }
 }

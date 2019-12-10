@@ -15,6 +15,7 @@ import ManageRooms from "./components/rooms/ManageRooms";
 import Room from "./components/room/Room";
 import CreateRoom from "./components/room/CreateRoom";
 import EditRoom from "./components/room/EditRoom";
+import Payment from "./components/layout/Payment";
 
 // Users
 import ManageUsers from "./components/users/ManageUsers";
@@ -63,6 +64,11 @@ const App = () => {
                 exact
                 path="/profile"
                 component={Profile}
+              ></PrivateRoute>
+              <PrivateRoute
+                exact
+                path="/payment/:id"
+                component={Payment}
               ></PrivateRoute>
               <PrivateRoute
                 exact

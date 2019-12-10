@@ -8,6 +8,9 @@ export const searchRooms = data => async dispatch => {
 
   params["numberOfAdults[gte]"] = (data && data.get("numberOfAdults")) || 1;
   params["numberOfChildren[gte]"] = (data && data.get("numberOfChildren")) || 1;
+  params["checkInDate"] = (data && data.get("checkInDate")) || "";
+  params["checkOutDate"] = (data && data.get("checkOutDate")) || "";
+  params["type"] = data && data.get("type");
 
   try {
     res = await axios.get("api/rooms", {

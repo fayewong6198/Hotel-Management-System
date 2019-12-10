@@ -1,4 +1,5 @@
 const Room = require("../models/Room");
+const Payment = require("../models/Payment");
 const asyncHandler = require("../middlewares/asyncHandler");
 const ErrorResponse = require("../utils/ErrorResponse");
 const config = require("config");
@@ -7,7 +8,6 @@ const config = require("config");
 // @route GET /api/rooms/
 // @access Public
 exports.getRooms = asyncHandler(async (req, res, next) => {
-  console.log(req.query);
   res.status(200).json(res.advancedResults);
 });
 
@@ -112,5 +112,57 @@ exports.uploadRoomImage = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: file.name
+  });
+});
+
+// @desc Booking room
+// @route POST /api/rooms/:id/payment
+// @access Private
+exports.makePayment = asyncHandler(async (req, res, next) => {
+  const room = await Room.findById(req.params.id);
+
+  if (!room) {
+    return next(new ErrorResponse("Room not found", 404));
+  }
+
+  const payments = await Payment.find({
+    room: room,
+    $or: [{ status: "watting" }, { status: "checked_in" }]
+  });
+
+  const check_in_date = new Date(req.body.checkInDate);
+  const check_out_date = new Date(req.body.checkOutDate);
+
+  if (payments) {
+    for (payment in payments) {
+      if (
+        (check_in_date >= payment.checkInDate &&
+          check_in_date <= payment.chechOutDate) ||
+        (check_out_date >= payment.checkInDate &&
+          check_out_date <= payment.chechOutDate) ||
+        (payment.checkInDate >= check_in_date &&
+          payment.checkInDate <= check_out_date)
+      ) {
+        console.log("Dupplicate in Date");
+        return res.status(401).json({
+          success: false,
+          message: "Dupplicated in Date"
+        });
+        return;
+      }
+    }
+  }
+
+  req.body.room = room;
+  req.body.user = req.user;
+
+  console.log("-------------------------------------------------------");
+
+  const payment = await Payment.create(req.body);
+
+  console.log(payment);
+  res.status(200).json({
+    success: true,
+    data: payment
   });
 });

@@ -58,6 +58,8 @@ const Landing = ({ location, isAuthenticated, searchRooms }) => {
                 name="checkInDate"
                 id=""
                 onChange={e => onChange(e)}
+                required
+                min={new Date().toISOString().split("T")[0]}
               />
             </div>
             <div className="check-out-date">
@@ -67,6 +69,8 @@ const Landing = ({ location, isAuthenticated, searchRooms }) => {
                 name="checkOutDate"
                 id=""
                 onChange={e => onChange(e)}
+                required
+                min={new Date().toISOString().split("T")[0]}
               />
             </div>
             <div className="adult">
