@@ -70,7 +70,7 @@ const Landing = ({ location, isAuthenticated, searchRooms }) => {
                 id=""
                 onChange={e => onChange(e)}
                 required
-                min={new Date().toISOString().split("T")[0]}
+                min={checkInDate}
               />
             </div>
             <div className="adult">
