@@ -6,6 +6,8 @@ import room from "./room";
 import user from "./user";
 import users from "./users";
 import comments from "./comments";
+import payments from "./payments";
+import date from "./date";
 export default combineReducers({
   alert,
   auth,
@@ -13,5 +15,7 @@ export default combineReducers({
   room,
   user,
   users,
-  comments
+  comments,
+  payments,
+  date
 });

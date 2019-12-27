@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { searchRooms } from "../../actions/rooms";
+import { setDate } from "../../actions/setDate";
 
-const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
+const SearchForm = ({ location, isAuthenticated, searchRooms, setDate }) => {
   const params = new URLSearchParams(location.search);
   const [formData, setFormData] = useState({
     type: params.get("type") || "room",
@@ -26,6 +27,9 @@ const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
 
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    if (checkInDate != null && checkOutDate != null)
+      setDate(checkInDate, checkOutDate);
   };
   return (
     <form action="/search" className="form form-reversion">
@@ -122,11 +126,12 @@ const SearchForm = ({ location, isAuthenticated, searchRooms }) => {
 
 SearchForm.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  searchRooms: PropTypes.func.isRequired
+  searchRooms: PropTypes.func.isRequired,
+  setDate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { searchRooms })(SearchForm);
+export default connect(mapStateToProps, { searchRooms, setDate })(SearchForm);

@@ -134,21 +134,17 @@ exports.makePayment = asyncHandler(async (req, res, next) => {
   const check_out_date = new Date(req.body.checkOutDate);
 
   if (payments) {
-    for (payment in payments) {
+    for (let i = 0; i < payments.length; i++) {
       if (
-        (check_in_date >= payment.checkInDate &&
-          check_in_date <= payment.chechOutDate) ||
-        (check_out_date >= payment.checkInDate &&
-          check_out_date <= payment.chechOutDate) ||
-        (payment.checkInDate >= check_in_date &&
-          payment.checkInDate <= check_out_date)
+        (check_in_date >= payments[i].checkInDate &&
+          check_in_date <= payments[i].checkOutDate) ||
+        (check_out_date >= payments[i].checkInDate &&
+          check_out_date <= payments[i].checkOutDate) ||
+        (payments[i].checkInDate >= check_in_date &&
+          payments[i].checkInDate <= check_out_date)
       ) {
         console.log("Dupplicate in Date");
-        return res.status(401).json({
-          success: false,
-          message: "Dupplicated in Date"
-        });
-        return;
+        return next(new ErrorResponse("Duplicate in Date", 401));
       }
     }
   }

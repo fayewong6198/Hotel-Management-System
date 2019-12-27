@@ -74,7 +74,10 @@ const Room = ({
                 {!isAuthenticated ? (
                   <Link>Login to make reversion</Link>
                 ) : (
-                  <Link to={`/payment/${room._id}`} class="btn btn-success">
+                  <Link
+                    to={`/payment/${room.roomData._id}`}
+                    class="btn btn-success"
+                  >
                     Reversion
                   </Link>
                 )}

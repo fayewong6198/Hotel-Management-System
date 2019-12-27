@@ -17,6 +17,9 @@ import CreateRoom from "./components/room/CreateRoom";
 import EditRoom from "./components/room/EditRoom";
 import Payment from "./components/layout/Payment";
 
+// Payments
+import Payments from "./components/payments/Payments";
+
 // Users
 import ManageUsers from "./components/users/ManageUsers";
 import CreateUser from "./components/users/CreateUser";
@@ -80,10 +83,16 @@ const App = () => {
                 path="/payments-history"
                 component={UserPaymentHistory}
               ></PrivateRoute>
+
               <StaffRoute
                 exact
                 path="/manage-rooms"
                 component={ManageRooms}
+              ></StaffRoute>
+              <StaffRoute
+                exact
+                path="/manage-payments"
+                component={Payments}
               ></StaffRoute>
               <StaffRoute
                 exact

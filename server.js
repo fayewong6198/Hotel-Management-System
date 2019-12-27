@@ -25,6 +25,7 @@ app.use("/api/rooms", require("./routes/api/room"));
 app.use("/api/users", require("./routes/api/user"));
 app.use("/api/staffs", require("./routes/api/staff"));
 app.use("/api/comments", require("./routes/api/comment"));
+app.use("/api/payments", require("./routes/api/payment"));
 
 app.use(errorHandler);
 

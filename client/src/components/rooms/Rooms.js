@@ -4,11 +4,21 @@ import { connect } from "react-redux";
 import { searchRooms } from "../../actions/rooms";
 import RoomItem from "./RoomItem";
 import SearchForm from "../layout/SearchForm";
+import { setDate } from "../../actions/setDate";
 
-const Rooms = ({ match, location, rooms, searchRooms, isAuthenticated }) => {
+const Rooms = ({
+  match,
+  location,
+  rooms,
+  searchRooms,
+  isAuthenticated,
+  setDate
+}) => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+
     searchRooms(params);
+    setDate(params.get("checkInDate"), params.get("checkOutDate"));
   }, []);
 
   return (
@@ -35,10 +45,11 @@ const Rooms = ({ match, location, rooms, searchRooms, isAuthenticated }) => {
 
 Rooms.propTypes = {
   rooms: PropTypes.object.isRequired,
-  searchRooms: PropTypes.func.isRequired
+  searchRooms: PropTypes.func.isRequired,
+  setDate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   rooms: state.rooms
 });
-export default connect(mapStateToProps, { searchRooms })(Rooms);
+export default connect(mapStateToProps, { searchRooms, setDate })(Rooms);

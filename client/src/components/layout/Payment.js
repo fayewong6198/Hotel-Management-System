@@ -10,7 +10,8 @@ const Payment = ({
   match,
   getRoomById,
   setAlert,
-  room: { loading, roomData }
+  room: { loading, roomData },
+  date
 }) => {
   const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -25,8 +26,8 @@ const Payment = ({
 
   const [formData, setFormData] = useStateWithCallback(
     {
-      checkInDate: "",
-      checkOutDate: ""
+      checkInDate: date.checkInDate,
+      checkOutDate: date.checkOutDate
     },
     (checkInDate, checkOutDate) => {
       if (!loading) {
@@ -102,6 +103,7 @@ const Payment = ({
             <div className="form-group check-in-date">
               <label for="checkInDate">Check in Date</label>
               <input
+                readOnly
                 type="date"
                 name="checkInDate"
                 value={checkInDate}
@@ -112,6 +114,7 @@ const Payment = ({
             <div className="form-group check-out-date">
               <label for="checkInDate">Check out Date</label>
               <input
+                readOnly
                 type="date"
                 name="checkOutDate"
                 value={checkOutDate}
@@ -136,10 +139,12 @@ const Payment = ({
 Payment.propTypes = {
   setAlert: PropTypes.func.isRequired,
   room: PropTypes.object.isRequired,
-  getRoomById: PropTypes.func.isRequired
+  getRoomById: PropTypes.func.isRequired,
+  date: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  room: state.room
+  room: state.room,
+  date: state.date
 });
 export default connect(mapStateToProps, { getRoomById, setAlert })(Payment);

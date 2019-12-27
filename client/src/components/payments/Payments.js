@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import LeftTab from "../layout/LeftTab";
 import { connect } from "react-redux";
 import {} from "../../actions/types";
-import { getUserPayments } from "../../actions/payments";
+import { getPayments } from "../../actions/payments";
 import Moment from "react-moment";
 
 import Spinner from "../layout/Spinner";
-const UserPayments = ({ payments, getUserPayments }) => {
+const Payments = ({ payments, getPayments }) => {
   useEffect(() => {
-    getUserPayments();
+    getPayments();
   }, []);
 
   return (
@@ -75,8 +75,8 @@ const UserPayments = ({ payments, getUserPayments }) => {
   );
 };
 
-UserPayments.propTypes = {
-  getUserPayments: PropTypes.func.isRequired,
+Payments.propTypes = {
+  getPayments: PropTypes.func.isRequired,
   payments: PropTypes.object.isRequired
 };
 
@@ -84,4 +84,4 @@ const mapStateToProps = state => ({
   payments: state.payments.payments
 });
 
-export default connect(mapStateToProps, { getUserPayments })(UserPayments);
+export default connect(mapStateToProps, { getPayments })(Payments);

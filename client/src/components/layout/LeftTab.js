@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 const LeftTab = ({ user }) => {
   return (
     <div className="left-tab">
@@ -15,8 +16,9 @@ const LeftTab = ({ user }) => {
         <Fragment>
           <Link to="/manage-users">Manage Customer</Link>
           <Link to="/manage-rooms">Manage Room</Link>
-          <Link to="/manage-bookings">Booking history</Link>
-          <Link to="/">Search Room</Link>
+          <Link to="/manage-payments">Payment history</Link>
+          <br></br>
+          <Link to="/search">Search Room</Link>
           <Link to="/payments-history">Your Payment</Link>
           <Link to="/edit-profile">Edit Profile</Link>
         </Fragment>
